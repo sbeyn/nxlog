@@ -1,0 +1,12 @@
+---
+# defaults file for nxlog
+nxlog_root: "C:\\Program Files (x86)\\nxlog"
+nxlog_moduledir: "%ROOT%\\modules"
+nxlog_cachedir: "%ROOT%\\data"
+nxlog_pidfile: "%ROOT%\\data\\nxlog.pid"
+nxlog_spooldir: "%ROOT%\\data"
+nxlog_logfile: "%ROOT%\\data\\nxlog.log"
+nxlog_omtcp_host: "localhost"
+nxlog_omtcp_port: 514
+nxlog_eventlog: false
+nxlog_eventlog_query: '<QueryList><Query Id="0"><Select Path="Microsoft-Windows-Sysmon/Operational">*</Select><Select Path="Application">*</Select><Select Path="System">*</Select><Select Path="Security">*</Select></Query></QueryList>'

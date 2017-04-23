@@ -1,0 +1,7 @@
+---
+# handlers file for nxlog
+- name: restart nxlog
+  win_service:
+    name: nxlog
+    state: restarted
+  tags: nxlog
