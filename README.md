@@ -18,14 +18,14 @@ The module win_package (by Chocolatey) manage all aspects of Nxlog (installation
 
 ## Role Other Variables
 
-nxlog_root: "C:\\Program Files (x86)\\nxlog"
-nxlog_moduledir: "%ROOT%\\modules"
-nxlog_cachedir: "%ROOT%\\data"
-nxlog_pidfile: "%ROOT%\\data\\nxlog.pid"
-nxlog_spooldir: "%ROOT%\\data"
-nxlog_logfile: "%ROOT%\\data\\nxlog.log"
-nxlog_omtcp_host: "localhost"
-nxlog_omtcp_port: 514
+- nxlog_root: "C:\\Program Files (x86)\\nxlog"
+- nxlog_moduledir: "%ROOT%\\modules"
+- nxlog_cachedir: "%ROOT%\\data"
+- nxlog_pidfile: "%ROOT%\\data\\nxlog.pid"
+- nxlog_spooldir: "%ROOT%\\data"
+- nxlog_logfile: "%ROOT%\\data\\nxlog.log"
+- nxlog_omtcp_host: "localhost"
+- nxlog_omtcp_port: 514
 
 
 ## Dependencies
