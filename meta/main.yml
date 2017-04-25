@@ -1,6 +1,6 @@
 galaxy_info:
   author: nxlog
-  description: The NXLog is one of our open source log management solutions. This role is for Windows and forward eventlog, files log to syslog centralized logging.
+  description: The NXLog is one of our open source log management solutions. This role is for Windows and forward files log to syslog centralized logging.
   license: "license (MIT)"
   min_ansible_version: 1.8
   platforms:

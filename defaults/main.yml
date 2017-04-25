@@ -13,4 +13,3 @@ nxlog_immsvistalog:
   query: '<QueryList><Query Id="0"><Select Path="Microsoft-Windows-Sysmon/Operational">*</Select><Select Path="Application">*</Select><Select Path="System">*</Select><Select Path="Security">*</Select></Query></QueryList>'
   parameters:
     Exec: 'if ($EventType == "INFO") OR ($EventType == "NOTICE") OR ($EventType == "VERBOSE") drop();'
-

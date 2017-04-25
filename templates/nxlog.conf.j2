@@ -10,29 +10,23 @@ SpoolDir {{ nxlog_spooldir }}
 LogFile {{ nxlog_logfile }}
 
 
-<Extension _syslog>
+<Extension syslog>
     Module      xm_syslog
 </Extension>
 
-{% if nxlog_immsvistalog.active %}
-<Input eventlog>
-    Module      im_msvistalog
-    Query	{{ nxlog_immsvistalog.query }}
-    {% for k, v in nxlog_immsvistalog.parameters.iteritems() -%}
-    {{ k }}	{{ v }}
-    {% endfor -%}
-</Input>
-{% endif %}
 
 {% for k, v in nxlog_imfile.iteritems() %}
 <Input {{ k }}>
     Module	im_file
     File	"{{ v.file }}"
-    {% for k, v in v.parameters.iteritems() -%}
+    {% for k, v in v.parameters.iteritems() %}
     {{ k }}	{{ v }}
-    {% endfor -%}
+    {% endfor %}
+
 </Input>
+
 {% endfor %}
+
 
 <Output out>
     Module      om_tcp
@@ -41,14 +35,10 @@ LogFile {{ nxlog_logfile }}
     Exec        to_syslog_snare();
 </Output>
 
-{% if nxlog_eventlog %}
-<Route eventlog>
-    Path        eventlog => out
-</Route>
-{% endif %}
 
 {% for k, v  in nxlog_imfile.iteritems() %}
 <Route {{ k }}>
     Path        {{ k }} => out
 </Route>
+
 {% endfor %}
