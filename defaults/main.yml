@@ -8,5 +8,9 @@ nxlog_spooldir: "%ROOT%\\data"
 nxlog_logfile: "%ROOT%\\data\\nxlog.log"
 nxlog_omtcp_host: "localhost"
 nxlog_omtcp_port: 514
-nxlog_eventlog: false
-nxlog_eventlog_query: '<QueryList><Query Id="0"><Select Path="Microsoft-Windows-Sysmon/Operational">*</Select><Select Path="Application">*</Select><Select Path="System">*</Select><Select Path="Security">*</Select></Query></QueryList>'
+nxlog_immsvistalog:
+  active: false
+  query: '<QueryList><Query Id="0"><Select Path="Microsoft-Windows-Sysmon/Operational">*</Select><Select Path="Application">*</Select><Select Path="System">*</Select><Select Path="Security">*</Select></Query></QueryList>'
+  parameters:
+    Exec: 'if ($EventType == "INFO") OR ($EventType == "NOTICE") OR ($EventType == "VERBOSE") drop();'
+

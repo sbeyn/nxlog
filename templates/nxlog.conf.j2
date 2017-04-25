@@ -14,21 +14,23 @@ LogFile {{ nxlog_logfile }}
     Module      xm_syslog
 </Extension>
 
-{% if nxlog_eventlog %}
+{% if nxlog_immsvistalog.active %}
 <Input eventlog>
     Module      im_msvistalog
-    Query	{{ nxlog_eventlog_query }}
-    Exec	if ($EventType == 'INFO') OR ($EventType == 'NOTICE') OR ($EventType == 'VERBOSE') drop();
+    Query	{{ nxlog_immsvistalog.query }}
+    {% for k, v in nxlog_immsvistalog.parameters.iteritems() -%}
+    {{ k }}	{{ v }}
+    {% endfor -%}
 </Input>
 {% endif %}
 
-{% for tag, file in nxlog_imfile.iteritems() %}
-<Input {{ tag }}>
+{% for k, v in nxlog_imfile.iteritems() %}
+<Input {{ k }}>
     Module	im_file
-    File	"{{ file }}"
-    ReadFromLast	True
-    SavePos	True
-    Exec	$nxtags = "{{ tag }}";
+    File	"{{ v.file }}"
+    {% for k, v in v.parameters.iteritems() -%}
+    {{ k }}	{{ v }}
+    {% endfor -%}
 </Input>
 {% endfor %}
 
@@ -45,8 +47,8 @@ LogFile {{ nxlog_logfile }}
 </Route>
 {% endif %}
 
-{% for tag, file in nxlog_imfile.iteritems() %}
-<Route {{ tag }}>
-    Path        {{ tag }} => out
+{% for k, v  in nxlog_imfile.iteritems() %}
+<Route {{ k }}>
+    Path        {{ k }} => out
 </Route>
 {% endfor %}

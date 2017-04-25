@@ -1,38 +1,69 @@
-Role Name
-=========
+# Ansible Role: nxlog
 
-A brief description of the role goes here.
+## Platform
 
-Requirements
-------------
+   - Windows
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## How it works
 
-Role Variables
---------------
+The NXLog Community Edition is one of our open source log management solutions available at no cost.
+This role add just a configuration for read eventlog, other files log and forward the data to syslog centralized logging.
+The module win_package (by Chocolatey) manage all aspects of Nxlog (installation, configuration, upgrade, and uninstallation).
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-Dependencies
-------------
+## Role Main Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+1. `nxlog_omtcp_host` (default: `localhost`): the host of syslog centralized logging.
+2. `nxlog_eventlog` (default: `false`): This params enabled the forward eventlog to syslog centralized logging.
 
-Example Playbook
-----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Role Other Variables
 
-    - hosts: servers
+nxlog_root: "C:\\Program Files (x86)\\nxlog"
+nxlog_moduledir: "%ROOT%\\modules"
+nxlog_cachedir: "%ROOT%\\data"
+nxlog_pidfile: "%ROOT%\\data\\nxlog.pid"
+nxlog_spooldir: "%ROOT%\\data"
+nxlog_logfile: "%ROOT%\\data\\nxlog.log"
+nxlog_omtcp_host: "localhost"
+nxlog_omtcp_port: 514
+nxlog_immsvistalog:
+  active: false
+  query: '<QueryList><Query Id="0"><Select Path="Microsoft-Windows-Sysmon/Operational">*</Select><Select Path="Application">*</Select><Select Path="System">*</Select><Select Path="Security">*</Select></Query></QueryList>'
+  parameters:
+    Exec: 'if ($EventType == "INFO") OR ($EventType == "NOTICE") OR ($EventType == "VERBOSE") drop();'
+
+
+## Dependencies
+
+None.
+
+## Example Playbook
+
+    - hosts: your-servers
       roles:
-         - { role: username.rolename, x: 42 }
+        - { role: nxlog, nxlog_omtcp_host: "your-server-logging", nxlog_eventlog: true }
 
-License
--------
 
-BSD
+    - hosts: your-servers
+      vars:
+        my-tag:
+          bpe_nifi_bootstrap:
+            file: "C:\\\\Program Files\\\\my-application\\\\logs\\\\my-application.log"
+            parameters:
+              ReadFromLast: True
+              SavePos: True
+              Exec: '$nxtags = "my-tag";'
+  
+      roles:
+        - { role: nxlog, nxlog_omtcp_host: "your-server-logging", nxlog_eventlog: false }
 
-Author Information
-------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## License
+
+MIT
+
+### Author Information
+
+This role was created by [Sylvain Beynard](https://github.com/sbeyn).
+
