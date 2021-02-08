@@ -1,0 +1,7 @@
+At the end - culprit found to be SystemJS not compatible with Barrels. I found out that System JS doesn't work well with Barrels (using index.js) in Angular application.
+
+It fails to resolve circular dependencies, and does not load modules properly when Barrels are used.
+
+I could resolve it by not using Barrels to import objects, instead used full qualified path to JS files.
+
+--Yogesh Patel
